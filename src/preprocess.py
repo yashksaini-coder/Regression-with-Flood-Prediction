@@ -38,3 +38,34 @@ def Statistic(df: pd.DataFrame(), categoric = False):  # type: ignore
 
     desc = desc.round(2)
     return desc.reset_index().rename(columns={'index':'Column'}).sort_values(by=['type'])
+
+
+def min_max_unique(data_train, data_test):
+    df = pd.DataFrame(index=data_train.columns)
+    summary = {}
+    
+    for col in data_train.columns:
+        if col in data_train and col in data_test:  # Check if column exists in both dataframes
+            if pd.api.types.is_numeric_dtype(data_train[col]):  
+                min_train = min(data_train[col])
+                min_test = min(data_test[col])
+                max_train = max(data_train[col])
+                max_test = max(data_test[col])
+                unique_train = len(data_train[col].unique())
+                unique_test = len(data_test[col].unique())
+                top5_train = sorted(data_train[col])[:5]
+                top5_test = sorted(data_test[col])[:5]
+            else:  
+                min_train = min_test = max_train = max_test = None
+                unique_train = len(data_train[col].unique())
+                unique_test = len(data_test[col].unique())
+                top5_train = top5_test = None
+            summary[col] = [min_train, min_test, max_train, max_test, 
+                            unique_train, unique_test]
+        else:
+            print(f"Column '{col}' not found in both data_train and data_test.")
+
+    df = pd.DataFrame.from_dict(summary, orient='index', columns=['min_train', 'min_test', 'max_train', 'max_test', 
+                                                                  'unique_train', 'unique_test'])\
+        .reset_index().rename(columns={'index': 'columns'})
+    return df
