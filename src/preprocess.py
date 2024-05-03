@@ -13,6 +13,14 @@ from colorama import Style, Fore  # noqa: E402, F401
 
 palette = ["d9ed92","b5e48c","99d98c","76c893","52b69a","34a0a4","168aad","1a759f","1e6091","184e77"]
 
+config = {
+    'SEED' : 42,
+    'N_SPLITS': 5,
+    'SUBMIT' : True,
+    'USE_ORIGINAL': False
+    
+}
+
 sns.set_theme(style = 'white', palette = 'colorblind')
 pal = sns.color_palette('colorblind')
 
