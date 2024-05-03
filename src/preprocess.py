@@ -1,8 +1,5 @@
 # Importing the basic libraries
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 from colorama import Style, Fore
 
 def printInfo(df,train,test):
@@ -20,7 +17,7 @@ def printInfo(df,train,test):
     print(f'{Style.BRIGHT}{Fore.GREEN} original: {df.duplicated().any().any()}')
     
 
-def Statistic(df: pd.DataFrame(), categoric = False):
+def Statistic(df: pd.DataFrame(), categoric = False):  # type: ignore
     num_cols = list(df._get_numeric_data())
     cat_cols = list(df.drop(num_cols,axis=1))
     if categoric:
