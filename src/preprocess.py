@@ -19,4 +19,25 @@ def printInfo(df,train,test):
     print(f'{Style.BRIGHT}{Fore.BLUE} test: {test.duplicated().any().any()}')
     print(f'{Style.BRIGHT}{Fore.GREEN} original: {df.duplicated().any().any()}')
     
-    
+
+def Statistic(df: pd.DataFrame(), categoric = False):
+    num_cols = list(df._get_numeric_data())
+    cat_cols = list(df.drop(num_cols,axis=1))
+    if categoric:
+        desc = pd.DataFrame(index = list(df[cat_cols]))
+        df = df[cat_cols]
+    else:
+        desc = pd.DataFrame(index = list(df[num_cols]))
+        df = df[num_cols]
+        desc['skew'] = df[num_cols].skew()
+        
+    desc['type'] = df.dtypes
+    desc['count'] = df.count()
+    desc['nunique'] = df.nunique()
+    desc['%unique'] = desc['nunique'] /len(df) * 100 
+    desc['null'] = df.isnull().sum()
+    desc['%null'] = desc['null'] / len(df) * 100
+    desc = pd.concat([desc,df.describe().T.drop('count',axis=1)],axis=1)    
+
+    desc = desc.round(2)
+    return desc.reset_index().rename(columns={'index':'Column'}).sort_values(by=['type'])
