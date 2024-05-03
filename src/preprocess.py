@@ -1,6 +1,7 @@
 # Importing the basic libraries
 import pandas as pd
 from colorama import Style, Fore
+TARGET = 'FloodProbability'
 
 def printInfo(df,train,test):
     print(f'{Style.BRIGHT}{Fore.YELLOW}SHAPE{Style.RESET_ALL}')
@@ -69,3 +70,10 @@ def min_max_unique(data_train, data_test):
                                                                   'unique_train', 'unique_test'])\
         .reset_index().rename(columns={'index': 'columns'})
     return df
+
+
+def Number_of_columns(df):
+    NUMERIC_COLS = [f for f in df._get_numeric_data() if f not in TARGET]
+    CAT_COLS = list(df.drop(NUMERIC_COLS,axis=1))
+    print(f'Numerical cols: {len(NUMERIC_COLS)}')
+    print(f'Categorical cols: {len(CAT_COLS)}')
