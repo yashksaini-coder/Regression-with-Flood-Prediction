@@ -60,7 +60,7 @@ def min_max_unique(data_train, data_test):
                 min_train = min_test = max_train = max_test = None
                 unique_train = len(data_train[col].unique())
                 unique_test = len(data_test[col].unique())
-                top5_train = top5_test = None
+                top5_train = top5_test = None  # noqa: F841
             summary[col] = [min_train, min_test, max_train, max_test, 
                             unique_train, unique_test]
         else:
