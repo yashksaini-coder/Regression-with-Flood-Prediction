@@ -1,5 +1,5 @@
 from colorama import Style, Fore  # noqa: F401
-import great_tables as GT
+import great_tables as GT,style ,exibble, from_column, loc
 from preprocess import Statistic
 import load
 
