@@ -1,8 +1,9 @@
 from colorama import Style, Fore  # noqa: F401
 import great_tables as GT
 from preprocess import Statistic
+import load
 
-
+train = load.load_train()
 
 stat = Statistic(train,False)
 GT(stat)\
